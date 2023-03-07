@@ -7,24 +7,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Achimota'),
     );
   }
 }
@@ -32,84 +19,288 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
+  bool isLoved = true;
+  void _favOnOff() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      isLoved = !isLoved;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        elevation: 0.0,
+        leading: const Icon(
+          Icons.menu,
+          color: Colors.green
+        ),
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                  Icons.location_on,
+                  color: Colors.green
+              ),
+              Text(
+                widget.title,
+                style: TextStyle( color: Colors.black),
+              ),
+            ],
+          )
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const CircleAvatar(
+              radius: 16,
+              backgroundImage: NetworkImage("https://docs.flutter.dev/assets/images/dash/dash-fainting.gif"),
+            ))
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Container(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 150,
+                    width:  MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 50, top: 20),
+                    child: SizedBox(
+                      width: 120,
+                      child: Text(
+                        'Peace in the head, peace in the stomach',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, top: 80),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                              )
+                          )
+                      ),
+                      child: const Text(
+                          'Order Now',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16)
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Column(
+              children: [
+                ListingComponent('Category', true),
+                SizedBox(
+                  height: 110,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      ListType_1('Breakfast', Colors.pink),
+                      ListType_1('Lunch', Colors.green),
+                      ListType_1('Snack', Colors.yellow),
+
+                      ListType_1('Breakfast', Colors.pink),
+                      ListType_1('Lunch', Colors.green),
+                      ListType_1('Snack', Colors.yellow),
+                    ],
+                  ),
+                ),
+                ListingComponent('Popular Now', false),
+                SizedBox(
+                  height: 200,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      ListType_2('Fufu with Goat meat', Colors.redAccent, isLoved),
+                      ListType_2('Barbecue Chicken', Colors.cyan, isLoved),
+                    ],
+                  ),
+                ),
+
+                ListingComponent('Feature Items', false),
+                SizedBox(
+                  height: 150,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      ListType_3('Sandwich', Colors.redAccent),
+                      ListType_3('Waffle', Colors.lightGreen),
+                      ListType_3('Cookies', Colors.orangeAccent),
+                      ListType_3('Chocolate', Colors.cyan),
+
+                      ListType_3('Sandwich', Colors.redAccent),
+                      ListType_3('Waffle', Colors.lightGreen),
+                      ListType_3('Cookies', Colors.orangeAccent),
+                      ListType_3('Chocolate', Colors.cyan),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  ListingComponent(String typename, bool isVisible){
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Text(
+                  typename,
+               ),
+               Visibility(
+                 visible: isVisible,
+                 child: GestureDetector(
+                     onTap: () {},
+                     child: const Text(
+                       'See All',
+                       style: TextStyle(color: Colors.green, decoration: TextDecoration.underline),
+                    )
+                 )
+               ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  ListType_1(String cardname, Color bgcolor){
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16.0),
+      child: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: 130,
+            decoration: BoxDecoration(
+              color: bgcolor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, top: 10),
+            child: Text(cardname, style: TextStyle(color: Colors.black),),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListType_2(String cardname, Color bgcolor, bool isLoved){
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16.0),
+      child: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: 150,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          Container(
+            height: 120,
+            width: 150,
+            decoration: BoxDecoration(
+              color: bgcolor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 105.0),
+            child: IconButton(
+              onPressed: _favOnOff,
+              icon: isLoved ? const Icon(Icons.favorite_outlined) : const Icon(Icons.favorite_outline),
+              color: Colors.green,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 128),
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 90,
+                  child: Text(
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    cardname,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                ),
+                //Expanded(child: SizedBox(width: 10,)),
+                Icon(Icons.star, size: 20, color: Colors.yellowAccent,),
+                Text(
+                    '5.0',
+                    style: TextStyle(color: Colors.white, fontSize: 14)
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListType_3(String cardname, Color bgcolor){
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 90,
+            width: 90,
+            decoration: BoxDecoration(
+              color: bgcolor,
+              borderRadius: BorderRadius.circular(45),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(cardname, style: TextStyle(color: Colors.black),),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
+
